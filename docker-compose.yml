@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13.5
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=gNbjQeAPAscNYCGaUpZo
+    volumes:
+      - postgres://postgres:postgres@containers-us-west-60.railway.app
+    ports:
+      - '5434:6352'
+volumes:
+  postgres:
