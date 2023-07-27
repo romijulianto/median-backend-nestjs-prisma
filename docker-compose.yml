@@ -1,14 +1,14 @@
 version: '3.8'
 services:
   postgres:
-    image: postgres:13.5
+    image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=gNbjQeAPAscNYCGaUpZo
+      - POSTGRES_USER=romijulianto
+      - POSTGRES_PASSWORD=romijulianto
     volumes:
-      - postgres://postgres:postgres@containers-us-west-60.railway.app
+      - postgres:/var/lib/postgresql/data
     ports:
-      - '5434:6352'
+      - '5434:5434'
 volumes:
   postgres:
