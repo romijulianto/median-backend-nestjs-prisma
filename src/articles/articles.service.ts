@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ArticlesService {
+  constructor(private prisma: PrismaService) { } // TODO: inject prisma-service to access the database
+
   create(createArticleDto: CreateArticleDto) {
     return 'This action adds a new article';
   }
