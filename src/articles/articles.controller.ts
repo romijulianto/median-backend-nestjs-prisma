@@ -5,7 +5,7 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 
 @Controller('articles')
 export class ArticlesController {
-  constructor(private readonly articlesService: ArticlesService) {}
+  constructor(private readonly articlesService: ArticlesService) { }
 
   @Post()
   create(@Body() createArticleDto: CreateArticleDto) {
@@ -13,13 +13,23 @@ export class ArticlesController {
   }
 
   @Get()
-  findAll() {
-    return this.articlesService.findAll();
+  async findAll() {
+    try {
+      const data = await this.articlesService.findAll();
+      return {
+        status: 200,
+        message: "success",
+        data: data,
+      };
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.articlesService.findOne(+id);
+  @Get('drafts')
+  findDrafts() {
+    return
   }
 
   @Patch(':id')
