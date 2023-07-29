@@ -8,7 +8,7 @@ export class ArticlesService {
   constructor(private prisma: PrismaService) { } // TODO: inject prisma-service to access the database
 
   create(createArticleDto: CreateArticleDto) {
-    return 'This action adds a new article';
+    return this.prisma.article.create({ data: createArticleDto })
   }
 
   findAll() {
