@@ -35,6 +35,9 @@ $ pnpm install
 ## Running the app
 
 ```bash
+# prisma studio
+$ npx prisma studio
+
 # development
 $ pnpm run start
 
@@ -43,6 +46,8 @@ $ pnpm run start:dev
 
 # production mode
 $ pnpm run start:prod
+
+
 ```
 
 ## Test
@@ -58,15 +63,32 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+## Database
+
+```bash
+# run migration
+$ npx prisma migrate dev --name "init"
+
+# run seeder
+$ npx prisma db seed
+
+# verify database are added
+$ npx prisma studio
+```
+
+## Server
+
+```bash
+# Server API
+$ base_url:3000/api/docs
+
+# Server Prisma Table
+$ base_url:5555
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
