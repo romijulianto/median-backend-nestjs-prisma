@@ -15,19 +15,8 @@ export function setupSwagger(app: INestApplication) {
 
     SwaggerModule.setup('api/docs', app, document, {
         swaggerOptions: {
-            deepLinking: true,
-            explorer: true,
-            customCss: '',
-            customJs: '',
-            docExpansion: 'list',
-            defaultModelsExpandDepth: -1,
             displayRequestDuration: true,
-            displayOperationId: false,
             filter: true,
-            showExtensions: true,
-            showCommonExtensions: true,
-            operationsSorter: 'alpha',
-            tagsSorter: 'alpha',
         },
     })
 }
