@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, NotFoundException } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
@@ -37,8 +37,8 @@ export class ArticlesController {
   async findOne(@Param('id') id: number): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.findOne(+id);
-      if(data === null) {
-        return new ApiResponse(HttpStatus.OK, ApiResponseCustomMessage.ARTICLES_NOT_FOUND)
+      if(!data) {
+        throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`)
       } else {
         return new ApiResponse(HttpStatus.OK, 'success', data)
       }
