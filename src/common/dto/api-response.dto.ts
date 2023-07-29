@@ -5,12 +5,12 @@ export enum ApiResponseCustomMessage{
 
 // TODO: create generic class with T
 export class ApiResponse<T> {
-    status: number;
+    statusCode: number;
     message: string;
     data?: T
 
     constructor(status: number, message: string, data?: T) {
-        this.status = status;
+        this.statusCode = status;
         this.message = message;
         this.data = data;
     }

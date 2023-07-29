@@ -38,12 +38,11 @@ export class ArticlesController {
     try {
       const data = await this.articlesService.findOne(+id);
       if(!data) {
-        throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`)
-      } else {
-        return new ApiResponse(HttpStatus.OK, 'success', data)
+        throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`).getResponse();
       }
+      return new ApiResponse(HttpStatus.OK, 'success', data)
     } catch (error) {
-      return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message)
+      throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`).getResponse();
     }
   }
 
