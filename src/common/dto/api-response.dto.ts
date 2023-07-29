@@ -1,6 +1,8 @@
 // TODO: create enum class to handle custom message
 export enum ApiResponseCustomMessage{
-    ARTICLES_NOT_FOUND = 'Could not find article with id:'
+    ARTICLES_NOT_FOUND = 'Could not find article with id:',
+    ARTICLES_UPDATE = 'Article updated with id:',
+    ARTICLES_DELETE = 'Article deleted with id:',
 }
 
 // TODO: create generic class with T

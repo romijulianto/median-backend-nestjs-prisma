@@ -3,7 +3,8 @@ import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { ApiResponse, ApiResponseCustomMessage } from 'src/common/dto/api-response.dto';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ArticleEntity } from './entities/article.entity';
 
 @ApiTags('articles')
 @Controller('articles')
@@ -12,12 +13,14 @@ export class ArticlesController {
 
   @Post()
   @ApiOperation({ summary: 'Post articles', description: 'Post new article' })
+  @ApiCreatedResponse({ type: ArticleEntity })
   create(@Body() createArticleDto: CreateArticleDto) {
     return this.articlesService.create(createArticleDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all articles', description: 'Return all articles' })
+  @ApiOperation({ summary: 'Get all published articles', description: 'Return all published articles' })
+  @ApiOkResponse({ type: ArticleEntity, isArray: true})
   async findAll(): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.findAll();
@@ -28,6 +31,8 @@ export class ArticlesController {
   }
 
   @Get('drafts')
+  @ApiOperation({ summary: 'Get all draft articles', description: 'Return all draft articles' })
+  @ApiOkResponse({ type: ArticleEntity, isArray: true })
   async findDrafts(): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.findDrafts();
@@ -40,6 +45,7 @@ export class ArticlesController {
   @Get(':id')
   @ApiOperation({ summary: 'Get an article by ID', description: 'Return a specific article by ID' })
   @ApiParam({ name: 'id', description: 'ID of the article', example: '1' })
+  @ApiOkResponse({ type: ArticleEntity })
   async findOne(@Param('id') id: number): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.findOne(+id);
@@ -53,12 +59,30 @@ export class ArticlesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
-    return this.articlesService.update(+id, updateArticleDto);
+  @ApiOkResponse({ type: ArticleEntity })
+  async update(@Param('id') id: string, @Body() updateArticleDto: UpdateArticleDto) {
+    try {
+      const data = await this.articlesService.update(+id, updateArticleDto);
+      if (!data) {
+        throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`).getResponse();
+      }
+      return new ApiResponse(HttpStatus.OK, `${ApiResponseCustomMessage.ARTICLES_UPDATE} ${id}`, data)
+    } catch (error) {
+      throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`).getResponse();
+    }
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.articlesService.remove(+id);
+  @ApiOkResponse({ type: ArticleEntity })
+  async remove(@Param('id') id: string) {
+    try {
+      const data = await this.articlesService.remove(+id);
+      if (!data) {
+        throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`).getResponse();
+      }
+      return new ApiResponse(HttpStatus.OK, `${ApiResponseCustomMessage.ARTICLES_DELETE} ${id}`)
+    } catch (error) {
+      throw new NotFoundException(`${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`).getResponse();
+    }
   }
 }
