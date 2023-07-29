@@ -19,7 +19,7 @@ export function setupSwagger(app: INestApplication) {
             explorer: true,
             customCss: '',
             customJs: '',
-            docExpansion: 'full',
+            docExpansion: 'list',
             defaultModelsExpandDepth: -1,
             displayRequestDuration: true,
             displayOperationId: false,

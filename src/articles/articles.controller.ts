@@ -19,17 +19,31 @@ export class ArticlesController {
       return {
         status: 200,
         message: "success",
-        data: data,
+        data: data
       };
     } catch (error) {
-      console.error(error);
-      throw error;
+      return {
+        status: 500,
+        message: error.message
+      };
     }
   }
 
   @Get('drafts')
-  findDrafts() {
-    return
+  async findDrafts() {
+    try {
+      const data = await this.articlesService.findDrafts();
+      return {
+        status: 200,
+        message: "success",
+        data: data
+      };
+    } catch (error) {
+      return {
+        status: 500,
+        message: error.message
+      };
+    }
   }
 
   @Patch(':id')
