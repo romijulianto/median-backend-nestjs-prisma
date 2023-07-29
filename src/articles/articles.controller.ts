@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
+import { ApiResponse } from 'src/common/dto/api-response.dto';
 
 @Controller('articles')
 export class ArticlesController {
@@ -13,36 +14,22 @@ export class ArticlesController {
   }
 
   @Get()
-  async findAll() {
+  async findAll(): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.findAll();
-      return {
-        status: 200,
-        message: "success",
-        data: data
-      };
+      return new ApiResponse(HttpStatus.OK, 'success', data)
     } catch (error) {
-      return {
-        status: 500,
-        message: error.message
-      };
+      return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message)
     }
   }
 
   @Get('drafts')
-  async findDrafts() {
+  async findDrafts(): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.findDrafts();
-      return {
-        status: 200,
-        message: "success",
-        data: data
-      };
+      return new ApiResponse(HttpStatus.OK, 'success', data)
     } catch (error) {
-      return {
-        status: 500,
-        message: error.message
-      };
+      return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message)
     }
   }
 
