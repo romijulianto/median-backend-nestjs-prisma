@@ -1,3 +1,8 @@
+// TODO: create enum class to handle custom message
+export enum ApiResponseCustomMessage{
+    ARTICLES_NOT_FOUND = 'The articles not found'
+}
+
 // TODO: create generic class with T
 export class ApiResponse<T> {
     status: number;
