@@ -11,7 +11,7 @@ export function setupSwagger(app: INestApplication) {
         .addTag('articles', 'endpoint for article transaction')
         .setBasePath('api/docs')
         .addServer('http://localhost:3000', 'HTTP')
-        .addServer('https://localhost:3000', 'HTTPS')
+        .addServer('https://median-backend.up.railway.app', 'HTTPS')
         .setContact('Romi Julianto', 'https://www.linkedin.com/in/romijulianto/', 'romyjulians@gmail.com')
         .build();
 
