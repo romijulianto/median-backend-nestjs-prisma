@@ -10,8 +10,8 @@ export function setupSwagger(app: INestApplication) {
         .addTag('main', 'base url')
         .addTag('articles', 'endpoint for article transaction')
         .setBasePath('api/docs')
-        .addServer('http://media-backend.up.railway.app', 'HTTP')
-        .addServer('https://media-backend.up.railway.app', 'HTTPS')
+        .addServer('http://localhost:3000', 'HTTP')
+        .addServer('https://localhost:3000', 'HTTPS')
         .setContact('Romi Julianto', 'https://www.linkedin.com/in/romijulianto/', 'romyjulians@gmail.com')
         .build();
 
