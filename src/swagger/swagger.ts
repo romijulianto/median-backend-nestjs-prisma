@@ -10,8 +10,8 @@ export function setupSwagger(app: INestApplication) {
         .addTag('main', 'base url')
         .addTag('articles', 'endpoint for article transaction')
         .setBasePath('api/docs')
-        .addServer('http://localhost:3000', 'HTTP')
-        .addServer('https://localhost:3000', 'HTTPS')
+        .addServer('https://3000-romijuliant-mediabacken-9xmycjx079y.ws-us102.gitpod.io', 'HTTP')
+        .addServer('hhttps://3000-romijuliant-mediabacken-9xmycjx079y.ws-us102.gitpod.io', 'HTTPS')
         .setContact('Romi Julianto', 'https://www.linkedin.com/in/romijulianto/', 'romyjulians@gmail.com')
         .build();
 
