@@ -5,18 +5,18 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ArticlesService {
-  constructor(private prisma: PrismaService) { } // TODO: inject prisma-service to access the database
+  constructor(private prisma: PrismaService) {}
 
   create(createArticleDto: CreateArticleDto) {
-    return this.prisma.article.create({ data: createArticleDto })
+    return this.prisma.article.create({ data: createArticleDto });
   }
 
   findAll() {
-    return this.prisma.article.findMany({ where: { published: true }});
+    return this.prisma.article.findMany({ where: { published: true } });
   }
 
   findDrafts() {
-    return this.prisma.article.findMany({ where: { published: false }});
+    return this.prisma.article.findMany({ where: { published: false } });
   }
 
   async findOne(id: number) {
@@ -24,10 +24,10 @@ export class ArticlesService {
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
-    return this.prisma.article.update({ 
-      where: {id},
+    return this.prisma.article.update({
+      where: { id },
       data: updateArticleDto,
-    })
+    });
   }
 
   remove(id: number) {
