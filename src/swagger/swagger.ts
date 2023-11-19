@@ -9,8 +9,8 @@ export function setupSwagger(app: INestApplication) {
     .setVersion('1.0')
     .addTag('articles', 'endpoint for article transaction')
     .setBasePath('api/docs')
+    .addServer('https://api.romijulianto.my.id/', 'HTTPS')
     .addServer('http://localhost:3001/', 'HTTP')
-    .addServer('https://nest.romijulianto.my.id/', 'HTTPS')
     .setContact(
       'Romi Julianto',
       'https://www.linkedin.com/in/romijulianto/',
