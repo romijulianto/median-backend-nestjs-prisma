@@ -86,6 +86,11 @@ $ base_url:3000/api/docs
 $ base_url:5555
 ```
 
+## Running the app
+```bash
+pm2 start dist/src/main.js --name median-backend
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
