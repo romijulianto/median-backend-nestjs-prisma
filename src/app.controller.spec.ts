@@ -15,7 +15,7 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('redirect to /api/docs"', () => {
+    it('redirect to median/api/docs"', () => {
       expect(appController.getRedirect()).toBe('Please wait..');
     });
   });

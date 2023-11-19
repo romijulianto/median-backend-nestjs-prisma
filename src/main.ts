@@ -4,7 +4,7 @@ import { setupSwagger } from './swagger/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.setGlobalPrefix('median');
   setupSwagger(app); // TODO:running and setup swagger
   await app.listen(process.env.PORT, '0.0.0.0');
 }

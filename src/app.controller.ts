@@ -8,6 +8,6 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Redirect('/api/docs')
+  @Redirect('median/api/docs')
   getRedirect() {}
 }

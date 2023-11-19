@@ -9,8 +9,8 @@ export function setupSwagger(app: INestApplication) {
     .setVersion('1.0')
     .addTag('articles', 'endpoint for article transaction')
     .setBasePath('api/docs')
-    .addServer('http://localhost:3000', 'HTTP')
-    .addServer('https://median-backend.up.railway.app', 'HTTPS')
+    .addServer('http://localhost:3001/median', 'HTTP')
+    .addServer('https://nest.romijulianto.my.id/median', 'HTTPS')
     .setContact(
       'Romi Julianto',
       'https://www.linkedin.com/in/romijulianto/',
@@ -26,9 +26,9 @@ export function setupSwagger(app: INestApplication) {
       filter: true,
     },
     customSiteTitle: 'Median Backend',
-    swaggerUrl: 'http://localhost:3000/api/docs/',
+    swaggerUrl: 'http://localhost:3001/median/api/docs/',
     explorer: true,
-    url: 'http://localhost:3000/',
+    url: 'http://localhost:3001/',
     useGlobalPrefix: true,
     customCss: '',
     customCssUrl: '',
