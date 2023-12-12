@@ -1,7 +1,7 @@
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { setupSwagger } from './swagger/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { PrismaClientExceptionFilter } from './prisma/error/prisma-client-exception.filter';
 
 async function bootstrap() {
@@ -13,6 +13,9 @@ async function bootstrap() {
   /* TODO: add error handling prisma */
   const { httpAdapter } = app.get(HttpAdapterHost);
   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
+
+  /* TODO: use ClassSerializerInterceptor to remove a field from the response */
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   app.setGlobalPrefix('median');
   setupSwagger(app); // TODO:running and setup swagger
