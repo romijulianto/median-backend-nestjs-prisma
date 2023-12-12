@@ -8,6 +8,7 @@ import {
   Delete,
   HttpStatus,
   NotFoundException,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -74,9 +75,11 @@ export class ArticlesController {
   })
   @ApiParam({ name: 'id', description: 'ID of the article', example: '1' })
   @ApiOkResponse({ type: ArticleEntity })
-  async findOne(@Param('id') id: number): Promise<ApiResponse<any>> {
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ApiResponse<any>> {
     try {
-      const data = await this.articlesService.findOne(+id);
+      const data = await this.articlesService.findOne(id);
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`,
@@ -93,11 +96,11 @@ export class ArticlesController {
   @Patch(':id')
   @ApiOkResponse({ type: ArticleEntity })
   async update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateArticleDto: UpdateArticleDto,
   ) {
     try {
-      const data = await this.articlesService.update(+id, updateArticleDto);
+      const data = await this.articlesService.update(id, updateArticleDto);
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`,
@@ -117,9 +120,9 @@ export class ArticlesController {
 
   @Delete(':id')
   @ApiOkResponse({ type: ArticleEntity })
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', ParseIntPipe) id: number) {
     try {
-      const data = await this.articlesService.remove(+id);
+      const data = await this.articlesService.remove(id);
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`,
