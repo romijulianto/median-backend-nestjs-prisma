@@ -9,6 +9,7 @@ import {
   ParseIntPipe,
   HttpStatus,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,6 +25,7 @@ import {
   ApiResponse,
   ApiResponseCustomMessage,
 } from 'src/common/dto/api-response.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 @ApiTags('users')
@@ -31,6 +33,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Post users', description: 'Post new user' })
   @ApiCreatedResponse({ type: UserEntity })
   async create(
@@ -47,6 +50,7 @@ export class UsersController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Get all users',
     description: 'Return all users',
@@ -63,6 +67,7 @@ export class UsersController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Get an user by ID',
     description: 'Return a specific user by ID',
@@ -87,6 +92,7 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Patch an user by ID',
     description: 'Return update user by ID',
@@ -118,6 +124,7 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({
     summary: 'Delete an user by ID',
     description: 'Return delete user by ID',
