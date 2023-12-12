@@ -63,6 +63,13 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+## Generate Resources
+
+```bash
+# generate resources in custom path
+$ npx nest generate resource users --path src/resources
+```
+
 ## Database
 
 ```bash
