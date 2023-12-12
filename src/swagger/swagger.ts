@@ -9,6 +9,7 @@ export function setupSwagger(app: INestApplication) {
     .setVersion('1.0')
     .addTag('articles', 'endpoint for article transaction')
     .addTag('users', 'endpoint for users transaction')
+    .addTag('auth', 'endpoint for auth get token')
     .setBasePath('api/docs')
     .addBearerAuth()
     .addServer('https://api.romijulianto.my.id/', 'HTTPS')
