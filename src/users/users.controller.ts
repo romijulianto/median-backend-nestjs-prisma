@@ -33,8 +33,17 @@ export class UsersController {
   @Post()
   @ApiOperation({ summary: 'Post users', description: 'Post new user' })
   @ApiCreatedResponse({ type: UserEntity })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<ApiResponse<any>> {
+    try {
+      const data = new UserEntity(
+        await this.usersService.create(createUserDto),
+      );
+      return new ApiResponse(HttpStatus.OK, 'success', data);
+    } catch (error) {
+      return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+    }
   }
 
   @Get()
@@ -45,7 +54,8 @@ export class UsersController {
   @ApiOkResponse({ type: UserEntity, isArray: true })
   async findAll(): Promise<ApiResponse<any>> {
     try {
-      const data = await this.usersService.findAll();
+      const users = await this.usersService.findAll();
+      const data = users.map((user) => new UserEntity(user));
       return new ApiResponse(HttpStatus.OK, 'success', data);
     } catch (error) {
       return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message);
@@ -62,7 +72,7 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ApiResponse<any>> {
     try {
-      const data = await this.usersService.findOne(id);
+      const data = new UserEntity(await this.usersService.findOne(id));
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.USERS_NOT_FOUND} ${id}`,
@@ -74,7 +84,6 @@ export class UsersController {
         `${ApiResponseCustomMessage.USERS_NOT_FOUND} ${id}`,
       ).getResponse();
     }
-    return;
   }
 
   @Patch(':id')
@@ -88,7 +97,9 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<ApiResponse<any>> {
     try {
-      const data = await this.usersService.update(id, updateUserDto);
+      const data = new UserEntity(
+        await this.usersService.update(id, updateUserDto),
+      );
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.USERS_NOT_FOUND} ${id}`,
@@ -116,7 +127,7 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ApiResponse<any>> {
     try {
-      const data = await this.usersService.remove(id);
+      const data = new UserEntity(await this.usersService.remove(id));
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.USERS_NOT_FOUND} ${id}`,
