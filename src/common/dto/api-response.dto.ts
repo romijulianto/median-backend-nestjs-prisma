@@ -3,6 +3,9 @@ export enum ApiResponseCustomMessage {
   ARTICLES_NOT_FOUND = 'Could not find article with id:',
   ARTICLES_UPDATE = 'Article updated with id:',
   ARTICLES_DELETE = 'Article deleted with id:',
+  USERS_NOT_FOUND = 'Could not find user with id:',
+  USERS_UPDATE = 'User updated with id:',
+  USERS_DELETE = 'User deleted with id:',
 }
 
 // TODO: create generic class with T

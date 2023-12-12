@@ -98,7 +98,7 @@ export class ArticlesController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateArticleDto: UpdateArticleDto,
-  ) {
+  ): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.update(id, updateArticleDto);
       if (!data) {
@@ -120,7 +120,9 @@ export class ArticlesController {
 
   @Delete(':id')
   @ApiOkResponse({ type: ArticleEntity })
-  async remove(@Param('id', ParseIntPipe) id: number) {
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<ApiResponse<any>> {
     try {
       const data = await this.articlesService.remove(id);
       if (!data) {
