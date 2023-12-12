@@ -68,6 +68,10 @@ $ pnpm run test:cov
 ```bash
 # run migration
 $ npx prisma migrate dev --name "init"
+$ npx prisma migrate dev --name "add-user-model"
+
+# run generate
+$ npx prisma generate
 
 # run seeder
 $ npx prisma db seed
@@ -87,6 +91,7 @@ $ base_url:5555
 ```
 
 ## Running the app
+
 ```bash
 pm2 start dist/src/main.js --name median-backend
 ```
