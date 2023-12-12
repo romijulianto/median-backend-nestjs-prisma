@@ -34,8 +34,17 @@ export class ArticlesController {
   @Post()
   @ApiOperation({ summary: 'Post articles', description: 'Post new article' })
   @ApiCreatedResponse({ type: ArticleEntity })
-  create(@Body() createArticleDto: CreateArticleDto) {
-    return this.articlesService.create(createArticleDto);
+  async create(
+    @Body() createArticleDto: CreateArticleDto,
+  ): Promise<ApiResponse<any>> {
+    try {
+      const data = new ArticleEntity(
+        await this.articlesService.create(createArticleDto),
+      );
+      return new ApiResponse(HttpStatus.OK, 'success', data);
+    } catch (error) {
+      return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message);
+    }
   }
 
   @Get()
@@ -46,7 +55,8 @@ export class ArticlesController {
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
   async findAll(): Promise<ApiResponse<any>> {
     try {
-      const data = await this.articlesService.findAll();
+      const articles = await this.articlesService.findAll();
+      const data = articles.map((article) => new ArticleEntity(article));
       return new ApiResponse(HttpStatus.OK, 'success', data);
     } catch (error) {
       return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message);
@@ -61,7 +71,8 @@ export class ArticlesController {
   @ApiOkResponse({ type: ArticleEntity, isArray: true })
   async findDrafts(): Promise<ApiResponse<any>> {
     try {
-      const data = await this.articlesService.findDrafts();
+      const drafts = await this.articlesService.findDrafts();
+      const data = drafts.map((draft) => new ArticleEntity(draft));
       return new ApiResponse(HttpStatus.OK, 'success', data);
     } catch (error) {
       return new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR, error.message);
@@ -79,7 +90,7 @@ export class ArticlesController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ApiResponse<any>> {
     try {
-      const data = await this.articlesService.findOne(id);
+      const data = new ArticleEntity(await this.articlesService.findOne(id));
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`,
@@ -100,7 +111,9 @@ export class ArticlesController {
     @Body() updateArticleDto: UpdateArticleDto,
   ): Promise<ApiResponse<any>> {
     try {
-      const data = await this.articlesService.update(id, updateArticleDto);
+      const data = new ArticleEntity(
+        await this.articlesService.update(id, updateArticleDto),
+      );
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`,
@@ -124,7 +137,7 @@ export class ArticlesController {
     @Param('id', ParseIntPipe) id: number,
   ): Promise<ApiResponse<any>> {
     try {
-      const data = await this.articlesService.remove(id);
+      const data = new ArticleEntity(await this.articlesService.remove(id));
       if (!data) {
         throw new NotFoundException(
           `${ApiResponseCustomMessage.ARTICLES_NOT_FOUND} ${id}`,
