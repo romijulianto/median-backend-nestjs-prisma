@@ -8,6 +8,7 @@ export function setupSwagger(app: INestApplication) {
     .setDescription('The Median API description')
     .setVersion('1.0')
     .addTag('articles', 'endpoint for article transaction')
+    .addTag('users', 'endpoint for users transaction')
     .setBasePath('api/docs')
     .addServer('https://api.romijulianto.my.id/', 'HTTPS')
     .addServer('http://localhost:3001/', 'HTTP')
