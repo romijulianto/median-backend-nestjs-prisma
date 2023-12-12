@@ -9,6 +9,7 @@ import {
   HttpStatus,
   NotFoundException,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
@@ -18,6 +19,7 @@ import {
   ApiResponseCustomMessage,
 } from 'src/common/dto/api-response.dto';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
@@ -25,6 +27,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { ArticleEntity } from './entities/article.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('articles')
 @Controller('articles')
@@ -32,6 +35,8 @@ export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Post articles', description: 'Post new article' })
   @ApiCreatedResponse({ type: ArticleEntity })
   async create(
@@ -48,6 +53,8 @@ export class ArticlesController {
   }
 
   @Get()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Get all published articles',
     description: 'Return all published articles',
@@ -64,6 +71,8 @@ export class ArticlesController {
   }
 
   @Get('drafts')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Get all draft articles',
     description: 'Return all draft articles',
@@ -80,6 +89,8 @@ export class ArticlesController {
   }
 
   @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({
     summary: 'Get an article by ID',
     description: 'Return a specific article by ID',
@@ -105,6 +116,8 @@ export class ArticlesController {
   }
 
   @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ArticleEntity })
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -132,6 +145,8 @@ export class ArticlesController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOkResponse({ type: ArticleEntity })
   async remove(
     @Param('id', ParseIntPipe) id: number,

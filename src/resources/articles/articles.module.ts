@@ -7,5 +7,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   controllers: [ArticlesController],
   providers: [ArticlesService],
   imports: [PrismaModule], // TODO: import prisma to access from article module
+  exports: [ArticlesService],
 })
 export class ArticlesModule {}

@@ -10,6 +10,7 @@ export function setupSwagger(app: INestApplication) {
     .addTag('articles', 'endpoint for article transaction')
     .addTag('users', 'endpoint for users transaction')
     .setBasePath('api/docs')
+    .addBearerAuth()
     .addServer('https://api.romijulianto.my.id/', 'HTTPS')
     .addServer('http://localhost:3001/', 'HTTP')
     .setContact(
